@@ -24,10 +24,16 @@ export const App = () => {
     : new Array(10).fill(0).map((_, i) => [i, 0]);
 
   return (
-    <Flex h="100svh" w="100svw" alignItems="center" justifyContent="center" p={4}>
-      <Flex maxW="800px" direction="column" gap={4}>
+    <Flex
+      h="100svh"
+      w="100svw"
+      alignItems="center"
+      justifyContent="center"
+      p={4}
+    >
+      <Flex maxW="800px" w="full" direction="column" gap={{ base: 1, md: 4 }}>
         <Heading textAlign="center">Handwritten Digit Recognition</Heading>
-        <Text fontSize="s" textAlign="center" color="gray.400">
+        <Text fontSize={{ base: "2xs", md: "md" }} textAlign="center" color="gray.400">
           An interactive web application that uses a custom-built neural network
           to classify hand-drawn digits in real time. The used neural network is
           a multi-layer perceptron with softmax output trained on the MNIST
@@ -43,7 +49,7 @@ export const App = () => {
             direction="column"
             w="fit-content"
             position="relative"
-            mt={{ base: 8, md: 0 }}
+            mt={{ base: 4, md: 0 }}
           >
             <Box
               ref={canvasRef}
@@ -75,7 +81,7 @@ export const App = () => {
             direction="column"
             w="400px"
             px={8}
-            gap={1}
+            gap={{ base: 0, md: 1 }}
             justifyContent="flex-start"
           >
             {sortedResults.map(([digit, possibility]) => {
