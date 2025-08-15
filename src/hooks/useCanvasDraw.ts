@@ -6,7 +6,7 @@ import {
   type RefObject,
 } from "react";
 
-export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
+export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement | null>) {
   const [imageData, setImageData] = useState<number[]>([]);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const drawing = useRef(false);
@@ -14,7 +14,7 @@ export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
 
   // Ensure canvas internal pixels match CSS size * devicePixelRatio
   const setupCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef?.current;
     if (!canvas) return;
 
     const dpr = window.devicePixelRatio || 1;
@@ -53,7 +53,7 @@ export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
 
   const getImageData = useCallback(
     (targetSize = 28): number[] => {
-      const canvas = canvasRef.current;
+      const canvas = canvasRef?.current;
       if (!canvas) return [];
 
       // 1) Copy current canvas pixels at native resolution
@@ -190,7 +190,7 @@ export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
   );
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef?.current;
     if (!canvas) return;
 
     setupCanvas();
@@ -265,7 +265,7 @@ export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
   }, [canvasRef, getImageData, setupCanvas]);
 
   const clear = () => {
-    const canvas = canvasRef.current;
+    const canvas = canvasRef?.current;
     const ctx = ctxRef.current;
     if (!canvas || !ctx) return;
     const rect = canvas.getBoundingClientRect();
@@ -275,5 +275,5 @@ export function useCanvasDraw(canvasRef: RefObject<HTMLCanvasElement>) {
     setImageData([]);
   };
 
-  return { clear, getImageData, setupCanvas, imageData };
+  return { clear, setupCanvas, imageData };
 }

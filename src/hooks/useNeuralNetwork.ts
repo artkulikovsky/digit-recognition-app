@@ -1,4 +1,4 @@
-import parameters from "./neural-network-parameters.json";
+import parameters from "../data/neural-network-parameters.json";
 
 const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
 
